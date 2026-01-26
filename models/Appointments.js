@@ -4,7 +4,6 @@ const AppointmentSchema = new mongoose.Schema({
   name: String,
   phone: String,
   date: String,
-  service: String
 });
 
 module.exports = mongoose.model("Appointment", AppointmentSchema);

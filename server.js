@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
 
 const app = express();
 
@@ -9,12 +8,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✅ root health check
+// health check
 app.get("/", (req, res) => {
   res.send("SmileCare Backend is running 🚀");
 });
 
-// ✅ appointment routes
+// appointment routes
 app.use("/api/appointments", require("./routes/appointmentRoutes"));
 
 // database
@@ -24,6 +23,4 @@ mongoose
   .catch((err) => console.error("❌ MongoDB Error:", err));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`🚀 Server running on port ${PORT}`)
-);
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));

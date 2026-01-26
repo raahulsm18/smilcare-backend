@@ -5,9 +5,9 @@ router.post("/", async (req, res) => {
   try {
     const appointment = new Appointment(req.body);
     await appointment.save();
-    res.status(201).json({ message: "Appointment saved" });
+    res.status(201).json({ message: "Appointment booked successfully" });
   } catch (err) {
-    res.status(500).json({ error: "Failed to save appointment" });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
