@@ -1,19 +1,24 @@
-require("dotenv").config();
 const express = require("express");
-const mongoose = require("mongoose");
+const router = express.Router();
+const User = require("../models/User");
 
-const app = express();
+// Register
+router.post("/register", async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB connected successfully"))
-  .catch(err => console.error("❌ MongoDB error:", err.message));
+    const user = new User({ email, password });
+    await user.save();
 
-app.get("/", (req, res) => {
-  res.send("SmileCare Backend is running 🚀");
+    res.status(201).json({ message: "User registered" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`✅ Backend running on port ${PORT}`);
+// Login
+router.post("/login", async (req, res) => {
+  res.json({ message: "Login route working" });
 });
+
+module.exports = router;
