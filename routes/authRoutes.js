@@ -1,28 +1,19 @@
+require("dotenv").config();
 const express = require("express");
-const bcrypt = require("bcryptjs");
-const User = require("../models/User");
+const mongoose = require("mongoose");
 
-const router = express.Router();
+const app = express();
 
-/* LOGIN */
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB connected successfully"))
+  .catch(err => console.error("❌ MongoDB error:", err.message));
 
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: "User not found" });
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid password" });
-    }
-
-    res.json({ message: "Login successful" });
-  } catch (error) {
-    res.status(500).json({ error });
-  }
+app.get("/", (req, res) => {
+  res.send("SmileCare Backend is running 🚀");
 });
 
-module.exports = router;
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`✅ Backend running on port ${PORT}`);
+});
