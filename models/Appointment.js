@@ -5,7 +5,9 @@ const appointmentSchema = new mongoose.Schema(
     name: { type: String, required: true },
     phone: { type: String, required: true },
     date: { type: String, required: true },
-    token: { type: Number, required: true } // ⭐ MUST ADD
+
+    // ⭐ REQUIRED FOR TOKEN SYSTEM
+    token: { type: Number, default: 0 }
   },
   { timestamps: true }
 );
