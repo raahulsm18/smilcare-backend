@@ -1,20 +1,24 @@
 const express = require("express");
-const router = express.Router();   // ⭐ MUST EXIST
+const router = express.Router();
 const Appointment = require("../models/Appointment");
 
 
+// ============================
 // GET all appointments
+// ============================
 router.get("/", async (req, res) => {
   try {
-    const data = await Appointment.find();
-    res.json(data);
+    const appointments = await Appointment.find();
+    res.json(appointments);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
 
+// ============================
 // POST new appointment
+// ============================
 router.post("/", async (req, res) => {
   try {
     console.log("Incoming body:", req.body);

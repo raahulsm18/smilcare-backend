@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "smilcare-backend",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
@@ -7,13 +7,12 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^4.18.2",
-    "mongodb": "4.1",
-    "mongoose": "^8.0.0"
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1",
+    "mongoose": "^8.21.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.0"
+    "nodemon": "^3.1.0"
   }
 }

@@ -1,40 +1,36 @@
 const dns = require("dns");
 dns.setDefaultResultOrder("ipv4first");
 
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
 require("dotenv").config();
 
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+
 const appointmentRoutes = require("./routes/appointmentRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
-
-// ✅ Middlewares
 app.use(cors());
 app.use(express.json());
 
-
-// ✅ Routes (IMPORTANT → lowercase + plural)
-app.use("/api/appointments", appointmentRoutes);
-
-
-// ✅ Test route
+/* ---------- Routes ---------- */
 app.get("/", (req, res) => {
-  res.send("API is running...");
+  res.send("SmileCare Backend is running 🚀");
 });
 
+app.use("/api/appointments", appointmentRoutes);
+app.use("/api/auth", authRoutes);
 
-// ✅ MongoDB connection
+/* ---------- MongoDB ---------- */
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.error("❌ MongoDB Error:", err.message));
 
-
-// ✅ Start server
-const PORT = process.env.PORT || 5000;
+/* ---------- Server ---------- */
+const PORT = process.env.PORT || 10000; // Render needs 10000
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);

@@ -1,2 +1,18 @@
-node_modules
+# dependencies
+node_modules/
+
+# environment variables
 .env
+
+# logs
+npm-debug.log*
+
+# build
+dist/
+build/
+
+# OS
+.DS_Store
+
+# VS Code
+.vscode/
