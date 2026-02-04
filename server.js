@@ -12,14 +12,29 @@ const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
-app.use(cors());
+/* ---------- Middlewares ---------- */
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://your-frontend.onrender.com",
+      "https://your-frontend.vercel.app"
+    ],
+  })
+);
+
 app.use(express.json());
 
-/* ---------- Routes ---------- */
+/* ---------- Health Routes ---------- */
 app.get("/", (req, res) => {
   res.send("SmileCare Backend is running 🚀");
 });
 
+app.get("/api", (req, res) => {
+  res.json({ message: "SmileCare API working ✅" });
+});
+
+/* ---------- API Routes ---------- */
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/auth", authRoutes);
 
@@ -30,7 +45,7 @@ mongoose
   .catch((err) => console.error("❌ MongoDB Error:", err.message));
 
 /* ---------- Server ---------- */
-const PORT = process.env.PORT || 10000; // Render needs 10000
+const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
