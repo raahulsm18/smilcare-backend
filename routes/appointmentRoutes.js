@@ -8,7 +8,7 @@ const Appointment = require("../models/Appointment");
 ================================ */
 router.get("/", async (req, res) => {
   try {
-    const data = await Appointment.find().sort({ token: 1 });
+    const data = await Appointment.find().sort({ date: 1, token: 1 });
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -17,21 +17,24 @@ router.get("/", async (req, res) => {
 
 
 /* ===============================
-   POST new appointment (TOKEN LOGIC)
+   POST new appointment (FIXED TOKEN LOGIC)
 ================================ */
 router.post("/", async (req, res) => {
   try {
-    const { date } = req.body;
+    let { name, phone, date } = req.body;
 
-    // ⭐ find last token ONLY for SAME DATE
-    const last = await Appointment
-      .findOne({ date })
-      .sort({ token: -1 });
+    // ⭐ normalize date
+    const normalizedDate = new Date(date).toISOString().split("T")[0];
 
-    const nextToken = last ? last.token + 1 : 1;
+    // ⭐ count only same date
+    const count = await Appointment.countDocuments({ date: normalizedDate });
+
+    const nextToken = count + 1;
 
     const appointment = await Appointment.create({
-      ...req.body,
+      name,
+      phone,
+      date: normalizedDate,
       token: nextToken
     });
 
@@ -51,6 +54,5 @@ router.delete("/:id", async (req, res) => {
   await Appointment.findByIdAndDelete(req.params.id);
   res.json({ message: "Deleted" });
 });
-
 
 module.exports = router;
