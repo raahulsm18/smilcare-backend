@@ -17,9 +17,10 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://your-frontend.onrender.com",
-      "https://your-frontend.vercel.app"
+      "https://smilcare-frontend.vercel.app"
     ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
   })
 );
 
